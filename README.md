@@ -1,7 +1,9 @@
 # AutocompleteFlask
 
 app.py - The python code that runs the flask server and loads the starcoder model. Requests are posted to this server and it returns the output from starcoder
+
 extension.js - The code for the extension in vscode. This is what interacts with the server and sends it the code from the user's side. 
+
 Dockerfile - the dockerfile used to build app.py into a docker image
 
 Commands I used to build and run the docker image:
