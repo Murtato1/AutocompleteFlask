@@ -17,8 +17,17 @@ function activate(context) {
             let lineNumber = selection.active.line;
             text = editor.document.lineAt(lineNumber).text;
         }
+        
+        // Format the text in the desired JSON format
+        let formattedText = {
+            "prompt": text,
+            "inference_type": "SUMMARIZATION"
+        };
+        
+        // Convert the JavaScript object into a JSON string
+        let jsonString = JSON.stringify(formattedText);
 
-        axios.post('SERVER URL', text)
+        axios.post('https://codebear.llm.dev.sparkcognition.dev/api/v1/inference', jsonString)
         .then(function (response) {
             let outputText = response.data;
             // Use selection.active to insert at the current position instead of the start of the selection
