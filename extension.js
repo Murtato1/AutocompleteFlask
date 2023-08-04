@@ -23,18 +23,17 @@ function activate(context) {
             "prompt": text,
             "inference_type": "SUMMARIZATION"
         };
-        
-        // Convert the JavaScript object into a JSON string
-        let jsonString = JSON.stringify(formattedText);
 
-        axios.post('https://codebear.llm.dev.sparkcognition.dev/api/v1/inference', jsonString)
+        axios.post('https://codebear.llm.dev.sparkcognition.dev/api/v1/inference', formattedText)
         .then(function (response) {
-            let outputText = response.data;
-            // Use selection.active to insert at the current position instead of the start of the selection
+            let fullText = response.data.response.generated_text;
+            let outputText = '\n' + fullText.split('\n').slice(1).join('\n'); // Add a newline right after the removed prompt
+            
             editor.edit((editBuilder) => {
                 editBuilder.insert(selection.active, outputText);
             });
         })
+        
         .catch(function (error) {
             console.log(error);
             vscode.window.showErrorMessage("Error communicating with StarCoder server.");
